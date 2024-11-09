@@ -1,0 +1,86 @@
+#include <iostream> 
+
+#include <vector> #include <string> using namespace std; class Book { public: 
+
+    string title;     string author;     double price; 
+
+ 
+
+    Book(string t, string a, double p) : title(t), author(a), price(p) 
+
+{} 
+
+}; 
+
+ 
+
+class Bookshop { private:     vector<Book> inventory; 
+
+ 
+
+public: 
+
+    void addBook(const Book& book) {         inventory.push_back(book); 
+
+        cout << "Book added: " << book.title << endl; 
+
+    }
+void displayBooks() {         cout << "Available books:\n";         for (const auto& book : inventory) { 
+
+            cout << "Title: " << book.title << ", Author: " << book.author << ", Price: $" << book.price << endl; 
+
+        } 
+
+    } 
+
+ 
+
+    void sellBook(const string& title) { 
+
+        for (auto it = inventory.begin(); it != inventory.end(); ++it) 
+
+{ 
+
+            if (it->title == title) { 
+
+                cout << "Sold: " << it->title << " for $" << it->price 
+
+<< endl; 
+
+                inventory.erase(it);                 return; 
+
+            } 
+
+        } 
+
+        cout << "Book not found!" << endl; 
+
+    } 
+
+};
+int main() {     Bookshop shop;     int choice; 
+
+ 
+
+    do { 
+
+        cout << "\n1. Add Book\n2. Display Books\n3. Sell Book\n4. Exit\nChoose an option: ";         cin >> choice; 
+
+ 
+
+        if (choice == 1) {             string title, author;             double price;             cout << "Enter title: ";             cin.ignore(); // Clear input buffer             getline(cin, title);             cout << "Enter author: ";             getline(cin, author);             cout << "Enter price: ";             cin >> price; 
+
+            shop.addBook(Book(title, author, price)); 
+
+        } else if (choice == 2) {             shop.displayBooks();         } else if (choice == 3) {             string title;
+cout << "Enter title of book to sell: ";             cin.ignore(); // Clear input buffer             getline(cin, title);             shop.sellBook(title); 
+
+        } 
+
+    } while (choice != 4); 
+
+ 
+
+    return 0; 
+
+}
